@@ -48,6 +48,7 @@ const Signup = () => {
         isClosable: true,
         position: "top-left",
       });
+      setLoading(false);
       return;
     }
     console.log(name, email, password, pic);
@@ -75,9 +76,9 @@ const Signup = () => {
         isClosable: true,
         position: "top-left",
       });
-      //localStorage.setItem("userInfo", JSON.stringify(data));
+      localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
-      //history.push("/chats");
+      history.push("/chats");
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -163,6 +164,7 @@ const Signup = () => {
         width="100%"
         style={{ marginTop: 15 }}
         onClick={submitHandler}
+        isLoading={loading}
       >
         Signup
       </Button>
