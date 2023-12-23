@@ -7,17 +7,90 @@ import {
   InputRightElement,
   VStack,
 } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/toast";
+import { useHistory } from "react-router";
+import axios from "axios";
 import React, { useState } from "react";
 
 const Signup = () => {
   const [show, setShow] = useState(false);
+  const toast = useToast();
+  const history = useHistory();
+  const handleClick = () => setShow(!show);
+
+  const [loading, setLoading] = useState(false);
   const [name, setName] = useState();
   const [email, setEmail] = useState();
-  const [passowrd, setPassword] = useState();
-  const [confirmPassword, setconfirmPassword] = useState();
+  const [password, setPassword] = useState();
+  const [confirmpassword, setconfirmPassword] = useState();
   const [pic, setPic] = useState();
-  const handleClick = () => setShow(!show);
+
   const postImages = () => {};
+
+  const submitHandler = async () => {
+    setLoading(true);
+    if (!name || !email || !password || !confirmpassword) {
+      toast({
+        title: "Please Fill all the Fields",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+      setLoading(false);
+      return;
+    }
+    if (password !== confirmpassword) {
+      toast({
+        title: "Passwords Do Not Match",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+      return;
+    }
+    console.log(name, email, password, pic);
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+        },
+      };
+      const { data } = await axios.post(
+        "/api/v1/user",
+        {
+          name,
+          email,
+          password,
+          pic,
+        },
+        config
+      );
+      console.log(data);
+      toast({
+        title: "Registration Successful",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+      //localStorage.setItem("userInfo", JSON.stringify(data));
+      setLoading(false);
+      //history.push("/chats");
+    } catch (error) {
+      toast({
+        title: "Error Occured!",
+        description: error.response.data.message,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "top-left",
+      });
+      setLoading(false);
+    }
+  };
+
   return (
     <VStack spacing="5px">
       <FormControl id="first-name" isRequired>
@@ -85,7 +158,12 @@ const Signup = () => {
           }}
         />
       </FormControl>
-      <Button colorScheme="blue" width="100%" style={{ marginTop: 15 }}>
+      <Button
+        colorScheme="blue"
+        width="100%"
+        style={{ marginTop: 15 }}
+        onClick={submitHandler}
+      >
         Signup
       </Button>
     </VStack>
