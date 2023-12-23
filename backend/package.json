@@ -1,0 +1,17 @@
+{
+  "name": "chit-chat",
+  "version": "1.0.0",
+  "description": "Full-stack chat application with the MERN stack and implementing real-time messaging functionality using socket.io, all designed with the Chakra UI.",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "Rushabh Gandhi",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mongoose": "^8.0.3",
+    "nodemon": "^3.0.2"
+  }
+}
