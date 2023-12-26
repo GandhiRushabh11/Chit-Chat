@@ -7,13 +7,14 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ChatState } from "../context/ChatProvider";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import { getSenderFull, getSender } from "../config/ChatLogics";
 import ProfileModel from "./ProfileModel";
 import UpdateGroupChatModal from "./UpdateGroupChatModal";
 import axios from "axios";
+import ScrollableChat from "./ScrollableChat";
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -55,6 +56,40 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       }
     }
   };
+  const fetchMessages = async () => {
+    if (!selectedChat) return;
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      setLoading(true);
+
+      const { data } = await axios.get(
+        `/api/v1/message/${selectedChat._id}`,
+        config
+      );
+      setMessages(data);
+      setLoading(false);
+      console.log(data);
+    } catch (error) {
+      toast({
+        title: "Error Occured!",
+        description: "Failed to Load the Messages",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+    }
+  };
+  useEffect(() => {
+    fetchMessages();
+  }, [selectedChat]);
+
   return (
     <>
       {selectedChat ? (
@@ -85,6 +120,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 <UpdateGroupChatModal
                   fetchAgain={fetchAgain}
                   setFetchAgain={setFetchAgain}
+                  fetchMessages={fetchMessages}
                 />
               </>
             )}
@@ -109,7 +145,9 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
                 margin="auto"
               />
             ) : (
-              <></>
+              <div className="messages">
+                <ScrollableChat messages={messages}></ScrollableChat>
+              </div>
             )}
 
             <FormControl
