@@ -15,12 +15,40 @@ import ProfileModel from "./ProfileModel";
 import UpdateGroupChatModal from "./UpdateGroupChatModal";
 import axios from "axios";
 import ScrollableChat from "./ScrollableChat";
+import io, { Socket } from "socket.io-client";
+const ENDPOINT = "http://localhost:8000/";
+var socket, selectedChatCompare;
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [newMessage, setNewMessage] = useState("");
+  const [setsocketConnected, setSetsocketConnected] = useState(false);
   const toast = useToast();
   const { selectedChat, setSelectedChat, user } = ChatState();
+
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.emit("setup", user);
+    socket.on("connection", () => setSetsocketConnected(true));
+  }, []);
+
+  useEffect(() => {
+    fetchMessages();
+    selectedChatCompare = selectedChat;
+  }, [selectedChat]);
+
+  useEffect(() => {
+    socket.on("message recieved", (newMessageRecieved) => {
+      if (
+        !selectedChatCompare ||
+        selectedChatCompare._id !== newMessageRecieved.chat._id
+      ) {
+        //give notification
+      } else {
+        setMessages([...messages, newMessageRecieved]);
+      }
+    });
+  });
   const typingHandler = (e) => {
     setNewMessage(e.target.value);
     // For Typing indicator
@@ -43,6 +71,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           },
           config
         );
+        socket.emit("new message", data);
         setMessages([...messages, data]);
       } catch (error) {
         toast({
@@ -74,6 +103,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       );
       setMessages(data);
       setLoading(false);
+      socket.emit("join chat", selectedChat._id);
       console.log(data);
     } catch (error) {
       toast({
@@ -86,9 +116,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       });
     }
   };
-  useEffect(() => {
-    fetchMessages();
-  }, [selectedChat]);
 
   return (
     <>
