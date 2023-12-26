@@ -4,6 +4,7 @@ const ConnectDB = require("./config/db.js");
 const cors = require("cors");
 const userRoutes = require("./routes/userRoutes.js");
 const chatRoutes = require("./routes/chatRoutes.js");
+const messageRoutes = require("./routes/messageRoutes.js");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware.js");
 dotenv.config({});
 const app = new exprees();
@@ -16,6 +17,7 @@ ConnectDB();
 //mounting Route
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/chat", chatRoutes);
+app.use("/api/v1/message", messageRoutes);
 //Error Middleware
 app.use(notFound);
 app.use(errorHandler);
