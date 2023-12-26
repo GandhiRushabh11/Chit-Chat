@@ -41,6 +41,19 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
               </>
             )}
           </Text>
+          <Box
+            display="flex"
+            flexDir="column"
+            justifyContent="flex-end"
+            p={3}
+            bg="#E8E8E8"
+            w="100%"
+            h="100%"
+            borderRadius="lg"
+            overflowY="hidden"
+          ></Box>
+
+          {/* All Message Here */}
         </>
       ) : (
         // to get socket.io on same page
