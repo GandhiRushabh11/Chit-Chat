@@ -25,7 +25,17 @@ const Signup = () => {
   const [confirmpassword, setconfirmPassword] = useState();
   const [pic, setPic] = useState();
 
-  const postImages = () => {};
+  const postImages = async (file) => {
+    setLoading(true);
+    const data = new FormData();
+    data.append("ProfilePhoto", file);
+    const res = await axios.post(
+      "http://localhost:8000/api/v1/user/profileImage",
+      data
+    );
+    setPic(res.data.secure_url);
+    setLoading(false);
+  };
 
   const submitHandler = async () => {
     setLoading(true);
