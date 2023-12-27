@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useToast } from "@chakra-ui/toast";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   Button,
@@ -17,7 +17,7 @@ const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const toast = useToast();
-  const history = useHistory();
+  const navigate = useNavigate();
   const handleClick = () => setShow(!show);
 
   const submitHandler = async () => {
@@ -57,7 +57,7 @@ const Login = () => {
       setLoading(false);
       //setUser(data);
       localStorage.setItem("userInfo", JSON.stringify(data));
-      history.push("/chats");
+      navigate("/chats");
     } catch (error) {
       toast({
         title: "Error Occured!",

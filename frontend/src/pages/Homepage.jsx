@@ -11,16 +11,16 @@ import {
 } from "@chakra-ui/react";
 import Login from "../components/Authentication/Login";
 import Signup from "../components/Authentication/Signup";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Homepage = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     if (userInfo) {
-      history.push("/chats");
+      navigate("/chats");
     }
-  }, [history]);
+  }, [navigate]);
   return (
     <Container maxW="xl" centerContent>
       <Box

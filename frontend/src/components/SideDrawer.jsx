@@ -29,7 +29,7 @@ import {
 } from "@chakra-ui/icons";
 import { ChatState } from "../context/ChatProvider";
 import ProfileModel from "./ProfileModel";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import ChatLoading from "./ChatLoading";
 import UserListItem from "./UserAvatar/UserListItem";
@@ -47,12 +47,12 @@ const SideDrawer = () => {
     notifications,
     setNotifications,
   } = ChatState();
-  const history = useHistory();
+  const navigate = useNavigate();
   const toast = useToast();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
-    history.push("/");
+    navigate("/");
   };
   const handleSearch = async () => {
     if (!search) {
