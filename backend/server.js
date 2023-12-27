@@ -6,6 +6,11 @@ const userRoutes = require("./routes/userRoutes.js");
 const chatRoutes = require("./routes/chatRoutes.js");
 const messageRoutes = require("./routes/messageRoutes.js");
 const { notFound, errorHandler } = require("./middleware/errorMiddleware.js");
+const postmanToOpenApi = require("postman-to-openapi");
+const path = require("path");
+const YAML = require("yamljs");
+const swaggerUi = require("swagger-ui-express");
+
 dotenv.config({});
 const app = new exprees();
 
@@ -14,6 +19,10 @@ app.use(exprees.json());
 //Connecting To DB
 ConnectDB();
 
+//Serving Swagger Documentation
+const swaggerDocument = YAML.load("./postman/swagger.yml");
+app.use("/swagger", swaggerUi.serve);
+app.get("/swagger", swaggerUi.setup(swaggerDocument));
 //mounting Route
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/chat", chatRoutes);
@@ -22,6 +31,20 @@ app.use("/api/v1/message", messageRoutes);
 app.use(notFound);
 app.use(errorHandler);
 
+//generate the swagger UI
+
+/* postmanToOpenApi(
+  "postman/Chit-Chat API.postman_collection.json",
+  path.join("postman/swagger.yml"),
+  { defaultTags: "General" }
+).then((res) => {
+  let result = YAML.load("postman/swagger.yml");
+  console.log(result.servers[0].url);
+  result.servers[0].url = "/";
+  app.use("/swagger", swaggerUi.serve);
+  app.get("/swagger", swaggerUi.setup(result));
+  //app.use("/swagger", swaggerUi.serve, swaggerUi.setup(result));
+}); */
 const PORT = process.env.PORT || 8000;
 const server = app.listen(PORT, () => {
   console.log(`Server Running at http://localhost: ${PORT}`);

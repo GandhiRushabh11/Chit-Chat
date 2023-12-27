@@ -1,0 +1,468 @@
+{
+	"info": {
+		"_postman_id": "9eba431f-5157-4857-92f5-d9808271dbd7",
+		"name": "Chit-Chat API",
+		"description": "Full-stack chat application with the MERN stack and implementing real-time messaging functionality using socket.io, all designed with the Chakra UI.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30199957"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Registration",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Rushabh\",\r\n    \"email\":\"test@gmail.com\",\r\n    \"password\":\"admin@322hs#\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/v1/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"user"
+							]
+						},
+						"description": "Start by registering a new user using the `Register User` endpoint."
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"mdfd@fmssadj.ocm\",\r\n    \"password\":\"dhddsfd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/v1/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"login"
+							]
+						},
+						"description": "Log in with the registered credentials using the `Login` endpoint to obtain an authentication token."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All User With Query",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"mdfd@fmssadj.ocm\",\r\n    \"password\":\"dhddsfd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/v1/user/?search=r",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								""
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "r"
+								}
+							]
+						},
+						"description": "Use the received token in the Authorization header when making requests to the \"Get All Users with Search Query\" endpoint, replacing `search=r` with your desired search term"
+					},
+					"response": []
+				},
+				{
+					"name": "Profile Upload",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "ProfilePhoto",
+									"type": "file",
+									"src": "/C:/Users/indianic/Desktop/abstractackground.avif"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:8000/api/v1/user/profileImage",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"profileImage"
+							]
+						},
+						"description": "Use the received token in the Authorization header when making requests to the `Upload Profile Image` endpoint to upload a profile picture."
+					},
+					"response": []
+				}
+			],
+			"description": "This collection provides endpoints to manage user registration, authentication, and profile image upload functionalities. It utilizes Multer for handling file uploads and Cloudinary for storing and managing user profile images"
+		},
+		{
+			"name": "Chats",
+			"item": [
+				{
+					"name": "Create or Access a One on One Chat",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODcyOGM2YjNjMGU1Njg5NGUyZmM1MCIsImlhdCI6MTcwMzM1ODY2NCwiZXhwIjoxNzA1OTUwNjY0fQ.qqELhInG8-C0yhu3JtBY8Igq2LWvHUuHPbql3VbtddE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\":\"6587193d604a2c1bd3621530\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/chat",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"chat"
+							]
+						},
+						"description": "This collection provides endpoints for managing a chat system, allowing users to send messages, retrieve conversations, and interact within a messaging environment"
+					},
+					"response": []
+				},
+				{
+					"name": "Fetching Chats",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODcyOGM2YjNjMGU1Njg5NGUyZmM1MCIsImlhdCI6MTcwMzM1ODY2NCwiZXhwIjoxNzA1OTUwNjY0fQ.qqELhInG8-C0yhu3JtBY8Igq2LWvHUuHPbql3VbtddE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/chat",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"chat"
+							]
+						},
+						"description": "Retrieves all user chats, including individual and group chats."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Group Chat",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODcyOGM2YjNjMGU1Njg5NGUyZmM1MCIsImlhdCI6MTcwMzM1ODY2NCwiZXhwIjoxNzA1OTUwNjY0fQ.qqELhInG8-C0yhu3JtBY8Igq2LWvHUuHPbql3VbtddE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"users\":\"[\\\"6587145e8a8da57aa3c6c2bd\\\",\\\"658728c6b3c0e56894e2fc50\\\"]\",\r\n\"name\":\"The Shield\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/chat/group",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"chat",
+								"group"
+							]
+						},
+						"description": "Creates a new group chat with specified users."
+					},
+					"response": []
+				},
+				{
+					"name": "Add User To Group",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODcyOGM2YjNjMGU1Njg5NGUyZmM1MCIsImlhdCI6MTcwMzM1ODY2NCwiZXhwIjoxNzA1OTUwNjY0fQ.qqELhInG8-C0yhu3JtBY8Igq2LWvHUuHPbql3VbtddE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/v1/chat/groupadd",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"chat",
+								"groupadd"
+							]
+						},
+						"description": "Adds a user to an existing group chat."
+					},
+					"response": []
+				},
+				{
+					"name": "Renaming Group Chat",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODcyOGM2YjNjMGU1Njg5NGUyZmM1MCIsImlhdCI6MTcwMzM1ODY2NCwiZXhwIjoxNzA1OTUwNjY0fQ.qqELhInG8-C0yhu3JtBY8Igq2LWvHUuHPbql3VbtddE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"chatId\":\"6587429c249f1452d6744ca7\",\r\n    \"chatName\":\"On Top Chat\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/chat/rename",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"chat",
+								"rename"
+							]
+						},
+						"description": "Renames an existing group chat."
+					},
+					"response": []
+				},
+				{
+					"name": "Remove User From Group Chat",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODcyOGM2YjNjMGU1Njg5NGUyZmM1MCIsImlhdCI6MTcwMzM1ODY2NCwiZXhwIjoxNzA1OTUwNjY0fQ.qqELhInG8-C0yhu3JtBY8Igq2LWvHUuHPbql3VbtddE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"chatId\":\"6587429c249f1452d6744ca7\",\r\n    \"userId\":\"658728c6b3c0e56894e2fc50\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/chat/groupremove",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"chat",
+								"groupremove"
+							]
+						},
+						"description": "Removes a user from an existing group chat."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Message",
+			"item": [
+				{
+					"name": "Send Messages",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODcyOGM2YjNjMGU1Njg5NGUyZmM1MCIsImlhdCI6MTcwMzM1ODY2NCwiZXhwIjoxNzA1OTUwNjY0fQ.qqELhInG8-C0yhu3JtBY8Igq2LWvHUuHPbql3VbtddE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\":\"Hello\",\r\n    \"chatId\":\"658ab6dd4a6bd1a09d78a191\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/message/",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"message",
+								""
+							]
+						},
+						"description": "Sends a message from one user to another."
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch Messages",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODcyOGM2YjNjMGU1Njg5NGUyZmM1MCIsImlhdCI6MTcwMzM1ODY2NCwiZXhwIjoxNzA1OTUwNjY0fQ.qqELhInG8-C0yhu3JtBY8Igq2LWvHUuHPbql3VbtddE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\":\"Hello\",\r\n    \"chatId\":\"658ab6dd4a6bd1a09d78a191\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/v1/message/658ab6dd4a6bd1a09d78a191",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"message",
+								"658ab6dd4a6bd1a09d78a191"
+							]
+						},
+						"description": "Fetches messages between the logged-in user and the specified user."
+					},
+					"response": []
+				}
+			],
+			"description": "This collection provides endpoints to manage sending and fetching messages between users within the chat system."
+		}
+	]
+}

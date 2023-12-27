@@ -1,0 +1,258 @@
+openapi: 3.0.0
+info:
+  title: Chit-Chat API
+  description: >-
+    Full-stack chat application with the MERN stack and implementing real-time
+    messaging functionality using socket.io, all designed with the Chakra UI.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+  - url: http://{{url}}
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+tags:
+  - name: User
+    description: >-
+      This collection provides endpoints to manage user registration,
+      authentication, and profile image upload functionalities. It utilizes
+      Multer for handling file uploads and Cloudinary for storing and managing
+      user profile images
+  - name: Chats
+  - name: Message
+    description: >-
+      This collection provides endpoints to manage sending and fetching messages
+      between users within the chat system.
+paths:
+  /api/v1/user:
+    post:
+      tags:
+        - User
+      summary: Registration
+      description: Start by registering a new user using the `Register User` endpoint.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Rushabh
+                email: test@gmail.com
+                password: admin@322hs#
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/user/login:
+    post:
+      tags:
+        - User
+      summary: Login
+      description: >-
+        Log in with the registered credentials using the `Login` endpoint to
+        obtain an authentication token.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: mdfd@fmssadj.ocm
+                password: dhddsfd
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/user/:
+    get:
+      tags:
+        - User
+      summary: Get All User With Query
+      description: >-
+        Use the received token in the Authorization header when making requests
+        to the "Get All Users with Search Query" endpoint, replacing `search=r`
+        with your desired search term
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+          example: r
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/user/profileImage:
+    post:
+      tags:
+        - User
+      summary: Profile Upload
+      description: >-
+        Use the received token in the Authorization header when making requests
+        to the `Upload Profile Image` endpoint to upload a profile picture.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                ProfilePhoto:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/chat:
+    post:
+      tags:
+        - Chats
+      summary: Create or Access a One on One Chat
+      description: >-
+        This collection provides endpoints for managing a chat system, allowing
+        users to send messages, retrieve conversations, and interact within a
+        messaging environment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                userId: 6587193d604a2c1bd3621530
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    get:
+      tags:
+        - Chats
+      summary: Fetching Chats
+      description: Retrieves all user chats, including individual and group chats.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/chat/group:
+    post:
+      tags:
+        - Chats
+      summary: Create Group Chat
+      description: Creates a new group chat with specified users.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                users: '["6587145e8a8da57aa3c6c2bd","658728c6b3c0e56894e2fc50"]'
+                name: The Shield
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/chat/groupadd:
+    post:
+      tags:
+        - Chats
+      summary: Add User To Group
+      description: Adds a user to an existing group chat.
+      requestBody:
+        content: {}
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/chat/rename:
+    put:
+      tags:
+        - Chats
+      summary: Renaming Group Chat
+      description: Renames an existing group chat.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                chatId: 6587429c249f1452d6744ca7
+                chatName: On Top Chat
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/chat/groupremove:
+    put:
+      tags:
+        - Chats
+      summary: Remove User From Group Chat
+      description: Removes a user from an existing group chat.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                chatId: 6587429c249f1452d6744ca7
+                userId: 658728c6b3c0e56894e2fc50
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/message/:
+    post:
+      tags:
+        - Message
+      summary: Send Messages
+      description: Sends a message from one user to another.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                content: Hello
+                chatId: 658ab6dd4a6bd1a09d78a191
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /api/v1/message/658ab6dd4a6bd1a09d78a191:
+    get:
+      tags:
+        - Message
+      summary: Fetch Messages
+      description: Fetches messages between the logged-in user and the specified user.
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
