@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../model/userModel");
 const generateToken = require("../config/generateToken");
+const { handleUpload } = require("../config/helper");
 
 exports.registerUser = asyncHandler(async (req, res) => {
   const { name, email, password, pic } = req.body;
@@ -73,4 +74,15 @@ exports.allUsers = asyncHandler(async (req, res) => {
     .find({ _id: { $ne: req.user._id } })
     .select("-password");
   res.send(users);
+});
+
+exports.uploadImage = asyncHandler(async (req, res) => {
+  try {
+    const b64 = Buffer.from(req.file.buffer).toString("base64");
+    let dataURI = "data:" + req.file.mimetype + ";base64," + b64;
+    const cldRes = await handleUpload(dataURI);
+    res.status(201).json(cldRes);
+  } catch (error) {
+    throw new Error(error.message);
+  }
 });
