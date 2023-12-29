@@ -29,12 +29,25 @@ const Signup = () => {
     setLoading(true);
     const data = new FormData();
     data.append("ProfilePhoto", file);
-    const res = await axios.post(
-      "http://localhost:8000/api/v1/user/profileImage",
-      data
-    );
-    setPic(res.data.secure_url);
-    setLoading(false);
+    await axios
+      .post("http://localhost:8000/api/v1/user/profileImage", data)
+      .then((result) => {
+        setPic(result.data.secure_url);
+        setLoading(false);
+        console.log(result);
+      })
+      .catch((err) => {
+        console.log(err);
+        toast({
+          title: err.message,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "top-left",
+        });
+        setLoading(false);
+      });
+    //setPic(res.data.secure_url);
   };
 
   const submitHandler = async () => {
