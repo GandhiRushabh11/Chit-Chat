@@ -19,7 +19,7 @@ import io from "socket.io-client";
 import Lottie from "lottie-react";
 import animationData from "../animations/typing.json";
 
-const ENDPOINT = "http://localhost:8000/";
+const ENDPOINT = "https://chit-chat-tgzv.onrender.com/";
 var socket, selectedChatCompare;
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   const [messages, setMessages] = useState([]);
