@@ -4,7 +4,9 @@
   "description": "Full-stack chat application with the MERN stack and implementing real-time messaging functionality using socket.io, all designed with the Chakra UI.",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "build": "npm install --legacy-peer-deps && npm install --legacy-peer-deps --prefix frontend && npm run build --prefix frontend"
   },
   "author": "Rushabh Gandhi",
   "license": "ISC",
