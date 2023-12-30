@@ -1,0 +1,29 @@
+{
+  "name": "chit-chat",
+  "version": "1.0.0",
+  "description": "Full-stack chat application with the MERN stack and implementing real-time messaging functionality using socket.io, all designed with the Chakra UI.",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js",
+    "server": "nodemon backend/server.js",
+    "build": "npm install --legacy-peer-deps && npm install --legacy-peer-deps --prefix frontend && npm run build --prefix frontend"
+  },
+  "author": "Rushabh Gandhi",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "cloudinary": "^1.41.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-async-handler": "^1.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.0.3",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^3.0.2",
+    "postman-to-openapi": "^3.0.1",
+    "socket.io": "^4.7.2",
+    "swagger-ui-express": "^5.0.0",
+    "yamljs": "^0.3.0"
+  }
+}
